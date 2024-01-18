@@ -7,7 +7,7 @@ import { PostModule } from './post/post.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://admin:admin@localhost:27017/data'),
+    MongooseModule.forRoot('mongodb://admin:admin@localhost:27017'),
     PostModule,
     UserModule,
     AuthModule,
