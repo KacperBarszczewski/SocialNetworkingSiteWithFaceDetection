@@ -11,11 +11,13 @@ export class PostService {
   ) {}
 
   async create(
+    user_id: string,
     description: string,
     image: string,
     isVisible: boolean,
   ): Promise<PostDocument> {
     const newPost = new this.postModel({
+      user_id,
       description,
       image,
       isVisible,

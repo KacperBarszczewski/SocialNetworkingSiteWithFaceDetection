@@ -17,11 +17,12 @@ export class PostController {
 
   @Post()
   createPost(
+    @Body('user_id') user_id: string,
     @Body('description') description: string,
     @Body('image') image: string,
     @Body('isVisible') isVisible: boolean,
   ): Promise<PostDocument> {
-    return this.postService.create(description, image, isVisible);
+    return this.postService.create(user_id, description, image, isVisible);
   }
 
   @Get()
