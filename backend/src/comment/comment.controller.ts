@@ -10,16 +10,14 @@ export class CommentController {
   createPost(
     @Body('name') name: string,
     @Body('text') text: string,
-    @Body('article_id') article_id: string,
+    @Body('post_id') post_id: string,
     @Body('isVisible') isVisible: boolean,
   ): Promise<CommentDocument> {
-    return this.commentService.create(name, text, article_id, isVisible);
+    return this.commentService.create(name, text, post_id, isVisible);
   }
 
-  @Get(':article_id')
-  findArticle(
-    @Param('article_id') article_id: string,
-  ): Promise<CommentDocument[]> {
-    return this.commentService.find(article_id);
+  @Get(':post_id')
+  findPost(@Param('post_id') post_id: string): Promise<CommentDocument[]> {
+    return this.commentService.find(post_id);
   }
 }

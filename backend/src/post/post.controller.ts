@@ -17,19 +17,11 @@ export class PostController {
 
   @Post()
   createPost(
-    @Body('title') title: string,
     @Body('description') description: string,
-    @Body('ingredients') ingredients: string[],
-    @Body('isVisible') isVisible: boolean,
     @Body('image') image: string,
+    @Body('isVisible') isVisible: boolean,
   ): Promise<PostDocument> {
-    return this.postService.create(
-      title,
-      description,
-      ingredients,
-      isVisible,
-      image,
-    );
+    return this.postService.create(description, image, isVisible);
   }
 
   @Get()
@@ -45,11 +37,9 @@ export class PostController {
   @Patch(':id')
   updatePost(
     @Param('id') id: string,
-    @Body('title') title: string,
     @Body('description') description: string,
-    @Body('ingredients') ingredients: string[],
-    @Body('isVisible') isVisible: boolean,
     @Body('image') image: string,
+    @Body('isVisible') isVisible: boolean,
     date: Date,
   ): Promise<PostDocument> {
     return this.postService.update(id, description, image, isVisible, date);

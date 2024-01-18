@@ -11,18 +11,14 @@ export class PostService {
   ) {}
 
   async create(
-    title: string,
     description: string,
-    ingredients: string[],
-    isVisible: boolean,
     image: string,
+    isVisible: boolean,
   ): Promise<PostDocument> {
     const newPost = new this.postModel({
-      title,
       description,
-      ingredients,
-      isVisible,
       image,
+      isVisible,
     });
     return newPost.save();
   }
