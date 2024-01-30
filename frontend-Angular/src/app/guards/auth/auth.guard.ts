@@ -1,5 +1,22 @@
-import { CanActivateFn } from '@angular/router';
+import { Router, UrlTree } from "@angular/router";
+import { Observable } from "rxjs/internal/Observable";
+import { AuthService } from "../../services/auth/auth.service";
+import { inject } from "@angular/core";
+import { map } from "rxjs/internal/operators/map";
+import { filter } from "rxjs/internal/operators/filter";
 
-export const authGuard: CanActivateFn = (route, state) => {
-  return true;
-};
+export const isLoggedIn = (): Observable<boolean | UrlTree> => {
+  const router = inject(Router);
+  const authService = inject(AuthService);
+
+  return authService.getCurrentUser().pipe(
+    filter((userJWT) => userJWT !== undefined),
+    map((isAuthenticated) => {
+      if (isAuthenticated) {
+        return true;
+      } else {
+        return router.createUrlTree(['/']);
+      }
+    })
+  )
+}
