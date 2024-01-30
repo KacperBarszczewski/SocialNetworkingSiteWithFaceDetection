@@ -45,7 +45,6 @@ export class AuthService {
       this.checkTokenExpired();
     } else {
       this.userJWT.next(null);
-  
     }
   }
 
@@ -96,8 +95,9 @@ export class AuthService {
     return this.userJWT.getValue()?.id;
   }
 
-  getFullCurrentUserData():UserData | null {
-    const decoded = jwtDecode<UserData>(this.userJWT.getValue().token);
+  getFullCurrentUserData(): UserData | null {
+    //Dosprawdzenia
+    const decoded = jwtDecode<UserData>(this.userJWT.getValue()!.token);
 
     return decoded;
   }

@@ -20,3 +20,19 @@ export const isLoggedIn = (): Observable<boolean | UrlTree> => {
     })
   )
 }
+
+export const shouldLogdIn = (): Observable<boolean | UrlTree> => {
+  const router = inject(Router);
+  const authService = inject(AuthService);
+
+  return authService.getCurrentUser().pipe(
+    filter((userJWT) => userJWT !== undefined),
+    map((isAuthenticated) => {
+      if (isAuthenticated) {
+        return router.createUrlTree(['/home']);
+      } else {
+        return true;
+      }
+    })
+  )
+}
