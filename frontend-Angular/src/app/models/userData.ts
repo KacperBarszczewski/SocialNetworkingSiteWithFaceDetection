@@ -1,6 +1,8 @@
 export interface UserData {
-  id: string;
-  name: string;
-  email: string;
-  isAdmin: boolean;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    isAdmin: boolean;
+  };
 }

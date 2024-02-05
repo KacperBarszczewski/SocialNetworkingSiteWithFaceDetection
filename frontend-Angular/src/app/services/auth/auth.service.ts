@@ -11,7 +11,6 @@ const USER_JWT_KEY = 'JWT_TOKEN';
 
 export interface UserJWT {
   token: string;
-  id: string;
   exp: number;
 }
 
@@ -36,7 +35,6 @@ export class AuthService {
       const decoded = jwtDecode<JwtPayload>(token);
       const userJWT: UserJWT = {
         token: token,
-        id: decoded.sub!,
         exp: decoded.exp!,
       };
 
@@ -49,9 +47,10 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    const formData = new FormData();
-    formData.append('email', email);
-    formData.append('password', password);
+    const formData = {
+      email: email,
+      password: password,
+    };
 
     return this.http
       .post<ApiAuthRes>(`${environment.domain}auth/login`, formData)
@@ -62,7 +61,6 @@ export class AuthService {
           const decoded = jwtDecode<JwtPayload>(res.token);
           const userJWT: UserJWT = {
             token: res.token,
-            id: decoded.sub!,
             exp: decoded.exp!,
           };
 
@@ -91,11 +89,11 @@ export class AuthService {
     return this.userJWT.asObservable();
   }
 
-  getCurrentUserId() {
-    return this.userJWT.getValue()?.id;
-  }
+  // getCurrentUserId() {
+  //   return this.userJWT.getValue()?.id;
+  // }
 
-  getFullCurrentUserData(): UserData | null {
+  getFullCurrentUserData(): UserData {
     //Dosprawdzenia
     const decoded = jwtDecode<UserData>(this.userJWT.getValue()!.token);
 
