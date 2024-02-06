@@ -5,6 +5,17 @@
         {{ loginError }}
       </label>
       <label class="block">
+        <span class="block">Nazwa</span>
+        <input
+          type="text"
+          name="name"
+          formControlName="name"
+          autocomplete="name"
+          required
+          class="block w-full mt-1 px-3 py-2 text-sm rounded-md border border-slate-200 bg-slate-800 focus:outline-none focus:border-sky-500"
+        />
+      </label>
+      <label class="block mt-3">
         <span class="block">Email</span>
         <input
           type="email"
@@ -22,7 +33,6 @@
           class="mt-1 flex items-center rounded-md border border-slate-200 focus-within:border-sky-500"
         >
           <input
-            #passwordInput
             [type]="showPassword ? 'text' : 'password'"
             name="password"
             inputmode="password"
@@ -58,7 +68,7 @@
             formControlName="repPassword"
             autocomplete="new-password"
             required
-            class="block text-sm bg-transparent px-3 py-2 focus:outline-none "
+            class="block text-sm bg-transparent px-3 py-2 focus:outline-none"
           />
           <button
             class="px-1"
