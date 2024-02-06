@@ -18,6 +18,7 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent {
   loginError: string = '';
+  showPassword: boolean = false;
 
   constructor(
     private fb: FormBuilder,

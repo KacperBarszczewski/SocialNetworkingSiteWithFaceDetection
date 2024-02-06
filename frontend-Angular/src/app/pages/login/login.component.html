@@ -22,8 +22,8 @@
           class="mt-1 flex items-center rounded-md border border-slate-200 focus-within:border-sky-500"
         >
           <input
-            #password
-            type="password"
+            #passwordInput
+            [type]="showPassword ? 'text' : 'password'"
             name="password"
             inputmode="password"
             formControlName="password"
@@ -31,10 +31,18 @@
             required
             class="block text-sm bg-transparent px-3 py-2 focus:outline-none"
           />
-          <button class="px-1" type="button" (click)="this.password.focus()">
+          <button
+            class="px-1"
+            type="button"
+            (click)="showPassword = !showPassword"
+          >
             <img
               class="min-h-6 min-w-6 size-fit"
-              src="../../../assets/visibility_off.svg"
+              [src]="
+                showPassword
+                  ? '../../../assets/visibility.svg'
+                  : '../../../assets/visibility_off.svg'
+              "
             />
           </button>
         </div>
