@@ -1,1 +1,91 @@
-<p>register works!</p>
+<div class="min-h-screen flex justify-center items-center">
+  <div class="bg-slate-800 px-8 py-11 rounded-md">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <label class="flex justify-center text-red-500" *ngIf="loginError">
+        {{ loginError }}
+      </label>
+      <label class="block">
+        <span class="block">Email</span>
+        <input
+          type="email"
+          name="email"
+          formControlName="email"
+          inputmode="email"
+          autocomplete="email"
+          required
+          class="block w-full mt-1 px-3 py-2 text-sm rounded-md border border-slate-200 bg-slate-800 focus:outline-none focus:border-sky-500"
+        />
+      </label>
+      <label class="block mt-3">
+        <span class="block">Hasło</span>
+        <div
+          class="mt-1 flex items-center rounded-md border border-slate-200 focus-within:border-sky-500"
+        >
+          <input
+            #passwordInput
+            [type]="showPassword ? 'text' : 'password'"
+            name="password"
+            inputmode="password"
+            formControlName="password"
+            autocomplete="current-password"
+            required
+            class="block text-sm bg-transparent px-3 py-2 focus:outline-none"
+          />
+          <button
+            class="px-1"
+            type="button"
+            (click)="showPassword = !showPassword"
+          >
+            <img
+              class="min-h-6 min-w-6 size-fit"
+              [src]="
+                showPassword
+                  ? '../../../assets/visibility.svg'
+                  : '../../../assets/visibility_off.svg'
+              "
+            />
+          </button>
+        </div>
+      </label>
+      <label class="block mt-3">
+        <span class="block">Powtórz Hasło</span>
+        <div
+          class="mt-1 flex items-center rounded-md border border-slate-200 focus-within:border-sky-500 invalid:first:border-red-500"
+        >
+          <input
+            #passwordInput
+            [type]="showRepPassword ? 'text' : 'password'"
+            name="password"
+            inputmode="password"
+            formControlName="password"
+            autocomplete="current-password"
+            required
+            class="block text-sm bg-transparent px-3 py-2 focus:outline-none"
+          />
+          <button
+            class="px-1"
+            type="button"
+            (click)="showRepPassword = !showRepPassword"
+          >
+            <img
+              class="min-h-6 min-w-6 size-fit"
+              [src]="
+                showRepPassword
+                  ? '../../../assets/visibility.svg'
+                  : '../../../assets/visibility_off.svg'
+              "
+            />
+          </button>
+        </div>
+      </label>
+      <div class="mt-8 flex justify-end">
+        <button
+          type="submit"
+          class="hover:bg-sky-300 bg-sky-500 py-1.5 px-6 rounded-md text-center"
+        >
+          Zaloguj się
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
