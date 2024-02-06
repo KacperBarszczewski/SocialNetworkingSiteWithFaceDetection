@@ -27,7 +27,7 @@
             name="password"
             inputmode="password"
             formControlName="password"
-            autocomplete="current-password"
+            autocomplete="new-password"
             required
             class="block text-sm bg-transparent px-3 py-2 focus:outline-none"
           />
@@ -50,17 +50,15 @@
       <label class="block mt-3">
         <span class="block">Powtórz Hasło</span>
         <div
-          class="mt-1 flex items-center rounded-md border border-slate-200 focus-within:border-sky-500 invalid:first:border-red-500"
+          class="mt-1 flex items-center rounded-md border border-slate-200 focus-within:border-sky-500"
         >
           <input
-            #passwordInput
             [type]="showRepPassword ? 'text' : 'password'"
-            name="password"
-            inputmode="password"
-            formControlName="password"
-            autocomplete="current-password"
+            name="repPassword"
+            formControlName="repPassword"
+            autocomplete="new-password"
             required
-            class="block text-sm bg-transparent px-3 py-2 focus:outline-none"
+            class="block text-sm bg-transparent px-3 py-2 focus:outline-none "
           />
           <button
             class="px-1"
@@ -81,7 +79,8 @@
       <div class="mt-8 flex justify-end">
         <button
           type="submit"
-          class="hover:bg-sky-300 bg-sky-500 py-1.5 px-6 rounded-md text-center"
+          [disabled]="form.invalid"
+          class="hover:bg-sky-300 bg-sky-500 py-1.5 px-6 rounded-md text-center disabled:bg-gray-700 disabled:text-gray-500"
         >
           Zaloguj się
         </button>

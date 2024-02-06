@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
@@ -27,11 +30,25 @@ export class RegisterComponent {
     private router: Router
   ) {}
 
-  form = this.fb.nonNullable.group({
-    email: ['', [Validators.required]],
-    password: ['', [Validators.required]],
-    repPassword: ['', [Validators.required,Validators.minLength(3)]],
-  });
+  form = this.fb.nonNullable.group(
+    {
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      repPassword: ['', [Validators.required]],
+    },
+    {
+      validators: this.passwordConfirmValidator(),
+    }
+  );
+
+  passwordConfirmValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const password = control.get('password')?.value;
+      const confirmPassword = control.get('repPassword')?.value;
+
+      return password === confirmPassword ? null : { notMatching: true };
+    };
+  }
 
   onSubmit() {
     const { email, password } = this.form.getRawValue();
