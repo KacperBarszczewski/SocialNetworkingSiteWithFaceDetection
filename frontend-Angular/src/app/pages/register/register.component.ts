@@ -32,7 +32,7 @@ export class RegisterComponent {
 
   form = this.fb.nonNullable.group(
     {
-      name:['', [Validators.required]],
+      name: ['', [Validators.required]],
       email: ['', [Validators.required]],
       password: ['', [Validators.required]],
       repPassword: ['', [Validators.required]],
@@ -52,11 +52,11 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    const { email, password } = this.form.getRawValue();
+    const { name, email, password } = this.form.getRawValue();
 
-    this.authService.login(email, password).subscribe({
+    this.authService.register(name,email, password).subscribe({
       next: (res) => {
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/login');
       },
       error: (err) => {
         this.loginError = err.error.message;

@@ -71,6 +71,16 @@ export class AuthService {
       );
   }
 
+  register(name: string, email: string, password: string) {
+    const formData = {
+      name: name,
+      email: email,
+      password: password,
+    };
+
+    return this.http.post(`${environment.domain}auth/register`, formData);
+  }
+
   signOut() {
     localStorage.removeItem(USER_JWT_KEY);
 
