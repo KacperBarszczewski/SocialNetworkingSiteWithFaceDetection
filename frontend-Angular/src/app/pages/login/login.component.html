@@ -1,7 +1,14 @@
 <div class="min-h-screen flex justify-center items-center">
-  <div class="bg-slate-800 px-8 py-11 rounded-md">
+  <div class="bg-slate-800 px-8 py-11 rounded-md relative">
+    <a
+      href="unlogged"
+      class="hover:bg-sky-300 bg-sky-500 font-extrabold absolute top-0 left-0 rounded-tl-md rounded-br-md py-2 px-3"
+    >
+      &lt;
+    </a>
+
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <label class="flex justify-center text-red-500" *ngIf="loginError">
+      <label class="flex justify-center text-red-500 min-h-6">
         {{ loginError }}
       </label>
       <label class="block">
