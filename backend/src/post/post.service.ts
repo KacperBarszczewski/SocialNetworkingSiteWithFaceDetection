@@ -2,12 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Date, Model } from 'mongoose';
 import { PostDocument } from './post.schema';
+import { UserDocument } from '../user/user.schema';
 
 @Injectable()
 export class PostService {
   constructor(
     @InjectModel('Post')
     private readonly postModel: Model<PostDocument>,
+    @InjectModel('User')
+    private readonly userModel: Model<UserDocument>,
   ) {}
 
   async create(
@@ -26,11 +29,11 @@ export class PostService {
   }
 
   async findAll(): Promise<PostDocument[]> {
-    return this.postModel.find().exec();
+    return this.postModel.find().populate('user_id', '-password').exec();
   }
 
   async find(id: string): Promise<PostDocument> {
-    return this.postModel.findById(id).exec();
+    return this.postModel.findById(id).populate('user_id', '-password').exec();
   }
 
   async update(
