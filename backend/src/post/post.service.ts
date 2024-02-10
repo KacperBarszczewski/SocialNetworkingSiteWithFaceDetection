@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Date, Model } from 'mongoose';
+import { Date, Model, isValidObjectId } from 'mongoose';
 import { PostDocument } from './post.schema';
 import { UserDocument } from '../user/user.schema';
 
@@ -29,11 +29,20 @@ export class PostService {
   }
 
   async findAll(): Promise<PostDocument[]> {
-    return this.postModel.find().populate('user_id', '-password').exec();
+    return await this.postModel.find().populate('user_id', '-password').exec();
   }
 
   async find(id: string): Promise<PostDocument> {
-    return this.postModel.findById(id).populate('user_id', '-password').exec();
+    if (!isValidObjectId(id)) {
+      throw new NotFoundException('Nieprawidłowy identyfikator postu');
+    }
+
+    const post = await this.postModel
+      .findById(id)
+      .populate('user_id', '-password')
+      .exec();
+
+    return post;
   }
 
   async update(
