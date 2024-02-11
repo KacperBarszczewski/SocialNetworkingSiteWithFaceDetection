@@ -1,0 +1,16 @@
+<div class="bg-slate-800 w-full flex rounded-lg">
+  <div class="basis-1/3 flex items-center">
+    <p class="pl-6 text-sm sm:text-base">Witaj, {{ name }}</p>
+  </div>
+  <div class="basis-1/3 flex items-center justify-center">
+    <h1 class="text-3xl font-bold text-center py-2 sm:py-4">Portal</h1>
+  </div>
+  <div class="basis-1/3 flex items-center justify-end">
+    <button
+      (click)="logout()"
+      class="hover:bg-sky-300 bg-sky-500 h-full px-1 sm:px-4 rounded-r-lg text-sm sm:text-base"
+    >
+      Wyloguj się
+    </button>
+  </div>
+</div>
