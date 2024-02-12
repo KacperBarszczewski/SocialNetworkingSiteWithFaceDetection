@@ -2,14 +2,22 @@
   <div class="mx-1 sm:mx-3 mt-3">
     <home-header />
   </div>
-  <div class="flex justify-center mt-2 mx-1">
+  <div class="flex flex-col items-center mt-2 mx-1">
     <div class="bg-slate-800 p-6 rounded-md w-full max-w-screen-sm">
       <h2 class="text-center">Utwórz post</h2>
+      <div class="flex justify-center">
+        <img [src]="imageSrc" />
+      </div>
+
       <form>
         <label class="flex justify-center mt-3">
           <span class="sr-only">Choose profile photo</span>
           <input
             type="file"
+            accept="image/*"
+            name="image"
+            formControlName="image"
+            (change)="onImageChange($event)"
             class="p-3 text-sm flex flex-col justify-center items-center rounded-md border border-dashed border-slate-200 bg-slate-700 hover:bg-slate-600 hover:border-sky-500 hover:file:bg-sky-300 file:bg-sky-500 file:border-0 file:text-slate-200 file:p-2 file:rounded-lg"
           />
         </label>
@@ -17,14 +25,19 @@
         <label class="block mt-3">
           <textarea
             type="text"
-            name="name"
-            formControlName="name"
+            name="opis"
+            formControlName="opis"
             placeholder="Opis"
             required
             class="block w-full mt-1 px-3 py-2 text-sm rounded-md resize-none border border-slate-200 bg-slate-800 focus:outline-none focus:border-sky-500"
           ></textarea>
         </label>
       </form>
+    </div>
+
+    <div class="bg-slate-800 p-6 rounded-md w-full max-w-screen-sm mt-2">
+      
+
     </div>
   </div>
 </div>
