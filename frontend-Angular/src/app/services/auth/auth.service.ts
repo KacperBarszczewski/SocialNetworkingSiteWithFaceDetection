@@ -99,9 +99,9 @@ export class AuthService {
     return this.userJWT.asObservable();
   }
 
-  // getCurrentUserId() {
-  //   return this.userJWT.getValue()?.id;
-  // }
+  getCurrentUserId() {
+    return this.getFullCurrentUserData().user.id;
+  }
 
   getFullCurrentUserData(): UserData {
     //Dosprawdzenia

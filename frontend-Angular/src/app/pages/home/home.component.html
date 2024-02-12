@@ -5,11 +5,11 @@
   <div class="flex flex-col items-center mt-2 mx-1">
     <div class="bg-slate-800 p-6 rounded-md w-full max-w-screen-sm">
       <h2 class="text-center">Utwórz post</h2>
-      <div class="flex justify-center">
-        <img [src]="imageSrc" />
+      <div class="flex justify-center mt-3">
+        <img [src]="imageSrc" class="max-h-96" />
       </div>
 
-      <form>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <label class="flex justify-center mt-3">
           <span class="sr-only">Choose profile photo</span>
           <input
@@ -25,19 +25,25 @@
         <label class="block mt-3">
           <textarea
             type="text"
-            name="opis"
-            formControlName="opis"
+            name="description"
+            formControlName="description"
             placeholder="Opis"
             required
             class="block w-full mt-1 px-3 py-2 text-sm rounded-md resize-none border border-slate-200 bg-slate-800 focus:outline-none focus:border-sky-500"
           ></textarea>
         </label>
+        <div class="mt-3 flex justify-end">
+          <button
+            type="submit"
+            [disabled]="form.invalid"
+            class="hover:bg-sky-300 bg-sky-500 py-1.5 px-6 rounded-md text-center disabled:bg-gray-700 disabled:text-gray-500"
+          >
+            Opublikuj
+          </button>
+        </div>
       </form>
     </div>
 
-    <div class="bg-slate-800 p-6 rounded-md w-full max-w-screen-sm mt-2">
-      
-
-    </div>
+    <div class="bg-slate-800 p-6 rounded-md w-full max-w-screen-sm mt-2"></div>
   </div>
 </div>
