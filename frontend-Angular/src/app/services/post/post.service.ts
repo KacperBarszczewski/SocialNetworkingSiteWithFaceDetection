@@ -39,4 +39,14 @@ export class PostService {
   getPostsSubject(): Observable<Post[]> {
     return this.postsSubject.asObservable();
   }
+
+  postComment(text: string,post_id:string ) {
+    const formData = {
+      user_id: this.authService.getCurrentUserId(),
+      text,
+      post_id,
+    };
+
+    return this.http.post(`${environment.domain}comment`, formData);
+  }
 }
