@@ -1,9 +1,16 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Date, Model, isValidObjectId } from 'mongoose';
 import { PostDocument } from './post.schema';
 import { UserDocument } from '../user/user.schema';
 import { CommentDocument } from 'src/comment/comment.schema';
+import { HttpService } from '@nestjs/axios';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class PostService {
@@ -14,6 +21,7 @@ export class PostService {
     private readonly userModel: Model<UserDocument>,
     @InjectModel('Comment')
     private readonly commentModel: Model<CommentDocument>,
+    private readonly httpService: HttpService,
   ) {}
 
   async create(
@@ -28,6 +36,27 @@ export class PostService {
       image,
       isVisible,
     });
+
+    try {
+      const formData = {
+        image: newPost.image,
+      };
+      const response = await this.httpService
+        .post('http://localhost:5000/upload', formData)
+        .pipe(map((response) => response.data))
+        .toPromise();
+      const result = response;
+      console.log('result:', result);
+      newPost.save();
+      return result;
+    } catch (error) {
+      console.error('Błąd podczas analizy obrazu:', error);
+      throw new HttpException(
+        'Konto z tym e-mailem już istniej',
+        HttpStatus.CONFLICT,
+      );
+    }
+
     return newPost.save();
   }
 
@@ -78,7 +107,7 @@ export class PostService {
     return existingPost.save();
   }
 
-  async delate(id: string) {
+  async delete(id: string) {
     return this.postModel.deleteOne({ _id: id }).exec();
   }
 }

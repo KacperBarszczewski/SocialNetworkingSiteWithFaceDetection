@@ -48,6 +48,6 @@ export class PostController {
 
   @Delete(':id')
   delatePost(@Param('id') id: string) {
-    return this.postService.delate(id);
+    return this.postService.delete(id);
   }
 }
