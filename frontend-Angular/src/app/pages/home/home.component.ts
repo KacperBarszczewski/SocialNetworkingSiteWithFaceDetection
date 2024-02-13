@@ -75,6 +75,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.postService.postPost(this.imageSrc, description).subscribe({
       next: (res) => {
         this.form.reset();
+        this.imageSrc = '';
         this.postService.getPosts().subscribe();
       },
       error: (err) => {
