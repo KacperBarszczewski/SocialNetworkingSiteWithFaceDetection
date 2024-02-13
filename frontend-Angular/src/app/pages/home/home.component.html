@@ -57,7 +57,11 @@
         >
           <img [src]="post.image" class="max-h-96" />
         </div>
-        <div class="flex justify-center mt-3">
+        <div class="flex mt-2 items-center">
+          <img class="h-5 w-5 size-fit" src="../../../assets/comment.svg" />
+          <span class="">{{ post.comments.length }}</span>
+        </div>
+        <div class="flex justify-center mt-1">
           <button
             (click)="toggleComments(post._id)"
             class="hover:bg-sky-300 bg-sky-500 py-1.5 px-6 rounded-md text-center"
