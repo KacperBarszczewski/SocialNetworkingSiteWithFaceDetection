@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   imageSrc: string = '';
+  postError: string = '';
   posts: Post[] = [];
   showComments: { [postId: string]: boolean } = {};
   commentForms: { [postId: string]: FormGroup } = {};
@@ -80,6 +81,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         console.error('Error submitting post:', err);
+        this.postError = err.error.message;
       },
     });
   }

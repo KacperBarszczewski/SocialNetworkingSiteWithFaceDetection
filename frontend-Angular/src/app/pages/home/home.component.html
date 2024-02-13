@@ -10,6 +10,9 @@
       </div>
 
       <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
+        <label class="flex justify-center text-red-500">
+          {{ postError }}
+        </label>
         <label class="flex justify-center mt-3">
           <span class="sr-only">Choose profile photo</span>
           <input
