@@ -9,7 +9,7 @@
         <img [src]="imageSrc" class="max-h-96" />
       </div>
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
         <label class="flex justify-center mt-3">
           <span class="sr-only">Choose profile photo</span>
           <input
@@ -44,6 +44,10 @@
       </form>
     </div>
 
-    <div class="bg-slate-800 p-6 rounded-md w-full max-w-screen-sm mt-2"></div>
+    <div class="bg-slate-800 p-6 rounded-md w-full max-w-screen-sm mt-2">
+      <div *ngFor="let post of posts">
+        <h2>{{ post._id }}</h2>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import {
   FormBuilder,
@@ -8,6 +8,8 @@ import {
 } from '@angular/forms';
 import { PostService } from '../../services/post/post.service';
 import { CommonModule } from '@angular/common';
+import { Post } from '../../models/post';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -16,10 +18,25 @@ import { CommonModule } from '@angular/common';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
   imageSrc: string = '';
+  posts: Post[] = [];
+  private postsSubscription: Subscription = new Subscription();
 
   constructor(private fb: FormBuilder, private postService: PostService) {}
+
+  ngOnInit() {
+    this.postService.getPosts().subscribe();
+    this.postsSubscription = this.postService
+      .getPostsSubject()
+      .subscribe((posts) => {
+        this.posts = posts;
+      });
+  }
+
+  ngOnDestroy() {
+    this.postsSubscription.unsubscribe();
+  }
 
   form = this.fb.nonNullable.group({
     image: [''],
@@ -39,12 +56,18 @@ export class HomeComponent {
     }
   }
 
-  onSubmit() {
+  onSubmit(event: Event) {
+    event.preventDefault();
     const { description } = this.form.getRawValue();
 
     this.postService.postPost(this.imageSrc, description).subscribe({
-      next: (res) => {},
-      error: (err) => {},
+      next: (res) => {
+        this.form.reset();
+        this.postService.getPosts().subscribe();
+      },
+      error: (err) => {
+        console.error('Error submitting post:', err);
+      },
     });
   }
 }
