@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, isValidObjectId } from 'mongoose';
 import { CommentDocument } from './comment.schema';
 import { UserDocument } from 'src/user/user.schema';
 
@@ -33,9 +33,11 @@ export class CommentService {
   }
 
   async find(a_id: string): Promise<CommentDocument[]> {
+    if (!isValidObjectId(a_id)) {
+      throw new NotFoundException('Nieprawidłowy identyfikator postu');
+    }
     return await this.commentModel
       .find({ post_id: a_id })
-      .populate('user_id', '-password')
-      .exec();
+      .populate('user_id', '-password');
   }
 }

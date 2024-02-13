@@ -38,7 +38,9 @@ export class PostService {
       .exec();
 
     for (const post of posts) {
-      post.comments = await this.commentModel.find({ post_id: post._id });
+      post.comments = await this.commentModel
+        .find({ post_id: post._id })
+        .populate('user_id', '-password');
     }
     return posts;
   }
@@ -53,7 +55,9 @@ export class PostService {
       .populate('user_id', '-password')
       .exec();
 
-    post.comments = await this.commentModel.find({ post_id: id });
+    post.comments = await this.commentModel
+      .find({ post_id: id })
+      .populate('user_id', '-password');
 
     return post;
   }
