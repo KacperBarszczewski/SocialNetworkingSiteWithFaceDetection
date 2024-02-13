@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Date, Model, isValidObjectId } from 'mongoose';
 import { PostDocument } from './post.schema';
 import { UserDocument } from '../user/user.schema';
+import { CommentDocument } from 'src/comment/comment.schema';
 
 @Injectable()
 export class PostService {
@@ -11,6 +12,8 @@ export class PostService {
     private readonly postModel: Model<PostDocument>,
     @InjectModel('User')
     private readonly userModel: Model<UserDocument>,
+    @InjectModel('Comment')
+    private readonly commentModel: Model<CommentDocument>,
   ) {}
 
   async create(
@@ -29,7 +32,15 @@ export class PostService {
   }
 
   async findAll(): Promise<PostDocument[]> {
-    return await this.postModel.find().populate('user_id', '-password').exec();
+    const posts = await this.postModel
+      .find()
+      .populate('user_id', '-password')
+      .exec();
+
+    for (const post of posts) {
+      post.comments = await this.commentModel.find({ post_id: post._id });
+    }
+    return posts;
   }
 
   async find(id: string): Promise<PostDocument> {
@@ -41,6 +52,8 @@ export class PostService {
       .findById(id)
       .populate('user_id', '-password')
       .exec();
+
+    post.comments = await this.commentModel.find({ post_id: id });
 
     return post;
   }

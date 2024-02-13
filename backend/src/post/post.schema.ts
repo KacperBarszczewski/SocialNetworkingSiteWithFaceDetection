@@ -23,6 +23,9 @@ export class Post {
 
   @Prop({ type: Date, default: Date.now })
   date: Date;
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }] })
+  comments: Comment[];
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);
