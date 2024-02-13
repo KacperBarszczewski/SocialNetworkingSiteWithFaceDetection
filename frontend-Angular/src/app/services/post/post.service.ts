@@ -18,4 +18,8 @@ export class PostService {
 
     return this.http.post(`${environment.domain}post`, formData);
   }
+
+  getPosts(){
+    this.http.get(`${environment.domain}post`)
+  }
 }

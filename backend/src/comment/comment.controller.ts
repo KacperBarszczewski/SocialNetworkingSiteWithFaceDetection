@@ -8,12 +8,12 @@ export class CommentController {
 
   @Post()
   createPost(
-    @Body('name') name: string,
+    @Body('user_id') user_id: string,
     @Body('text') text: string,
     @Body('post_id') post_id: string,
     @Body('isVisible') isVisible: boolean,
   ): Promise<CommentDocument> {
-    return this.commentService.create(name, text, post_id, isVisible);
+    return this.commentService.create(user_id, text, post_id, isVisible);
   }
 
   @Get(':post_id')
