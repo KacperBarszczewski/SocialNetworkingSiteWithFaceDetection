@@ -26,7 +26,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   commentForms: { [postId: string]: FormGroup } = {};
   private postsSubscription: Subscription = new Subscription();
 
-  constructor(private fb: FormBuilder, private postService: PostService) {}
+  constructor(private fb: FormBuilder, private postService: PostService) {
+    this.posts.forEach((post) => {
+      this.showComments[post._id] = false;
+    });
+  }
 
   ngOnInit() {
     this.postService.getPosts().subscribe();
@@ -35,7 +39,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe((posts) => {
         this.posts = posts;
         this.posts.forEach((post) => {
-          this.showComments[post._id] = false;
           this.commentForms[post._id] = this.fb.nonNullable.group({
             comment: ['', Validators.required],
           });
@@ -92,7 +95,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.postService.postComment(comment, postId).subscribe({
       next: (res) => {
-        this.form.reset();
+        this.commentForms[postId].reset();
         this.postService.getPosts().subscribe();
       },
       error: (err) => {

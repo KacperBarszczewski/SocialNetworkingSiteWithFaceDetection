@@ -27,6 +27,9 @@ export class PostService {
     return this.http.get<Post[]>(`${environment.domain}post`).pipe(
       tap((posts) => {
         posts.reverse();
+        posts.forEach((post) => {
+          post.comments.reverse();
+        });
         this.postsSubject.next(posts);
       }),
       catchError((error) => {
@@ -40,7 +43,7 @@ export class PostService {
     return this.postsSubject.asObservable();
   }
 
-  postComment(text: string,post_id:string ) {
+  postComment(text: string, post_id: string) {
     const formData = {
       user_id: this.authService.getCurrentUserId(),
       text,
