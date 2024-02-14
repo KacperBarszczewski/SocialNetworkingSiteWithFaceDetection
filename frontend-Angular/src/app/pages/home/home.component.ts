@@ -8,6 +8,5 @@ import { CreatePostFormComponent } from '../../components/create-post-form/creat
   standalone: true,
   imports: [HeaderComponent, CreatePostFormComponent, PostsComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
 })
 export class HomeComponent {}

@@ -16,7 +16,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './posts.component.html',
-  styleUrl: './posts.component.css',
 })
 export class PostsComponent implements OnInit, OnDestroy {
   posts: Post[] = [];

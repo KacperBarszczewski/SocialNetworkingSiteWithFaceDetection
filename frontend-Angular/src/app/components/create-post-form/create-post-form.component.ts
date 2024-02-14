@@ -13,7 +13,6 @@ import { PostService } from '../../services/post/post.service';
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './create-post-form.component.html',
-  styleUrl: './create-post-form.component.css',
 })
 export class CreatePostFormComponent {
   imageSrc: string = '';
