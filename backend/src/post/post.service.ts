@@ -1,16 +1,10 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Date, Model, isValidObjectId } from 'mongoose';
 import { PostDocument } from './post.schema';
 import { UserDocument } from '../user/user.schema';
 import { CommentDocument } from 'src/comment/comment.schema';
 import { HttpService } from '@nestjs/axios';
-import { map } from 'rxjs/operators';
 
 @Injectable()
 export class PostService {
@@ -37,24 +31,27 @@ export class PostService {
       isVisible,
     });
 
-    try {
-      const formData = {
-        image: newPost.image,
-      };
-      const response = await this.httpService
-        .post('http://localhost:5000/upload', formData)
-        .pipe(map((response) => response.data))
-        .toPromise();
-      const result = response;
-      console.log('result:', result);
-      newPost.save();
-      return result;
-    } catch (error) {
-      console.error('Błąd podczas analizy obrazu:', error);
-      throw new HttpException(
-        'Konto z tym e-mailem już istniej',
-        HttpStatus.CONFLICT,
-      );
+    if (image) {
+      try {
+        const response = await this.httpService
+          .post('http://localhost:5000/upload', { image: newPost.image })
+          .toPromise();
+
+        console.log('result:', response.data);
+
+        if (response.status !== 200) {
+          throw new HttpException(
+            response.data.error || 'Błąd podczas analizy obrazu',
+            response.status,
+          );
+        }
+      } catch (error) {
+        console.error('error:', error);
+        throw new HttpException(
+          error.response.data.error || 'Błąd podczas analizy obrazu',
+          error.response.status,
+        );
+      }
     }
 
     return newPost.save();
