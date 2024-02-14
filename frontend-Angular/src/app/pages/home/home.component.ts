@@ -59,6 +59,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   onImageChange(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files[0]) {
+      this.postError = '';
       const file = inputElement.files[0];
       const reader = new FileReader();
       reader.onload = () => {
@@ -77,10 +78,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       next: (res) => {
         this.form.reset();
         this.imageSrc = '';
+        this.postError = '';
         this.postService.getPosts().subscribe();
       },
       error: (err) => {
-        console.error('Error submitting post:', err);
         this.postError = err.error.message;
       },
     });
