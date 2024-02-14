@@ -3,51 +3,9 @@
     <home-header />
   </div>
   <div class="flex flex-col items-center mt-2 mx-1">
-    <div class="bg-slate-800 p-6 rounded-md w-full max-w-screen-sm">
-      <h2 class="text-center">Utwórz post</h2>
-      <div class="flex justify-center mt-3">
-        <img [src]="imageSrc" class="max-h-96" />
-      </div>
-
-      <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
-        <label class="flex justify-center text-red-500">
-          {{ postError }}
-        </label>
-        <label class="flex justify-center mt-3">
-          <span class="sr-only">Choose profile photo</span>
-          <input
-            type="file"
-            accept="image/*"
-            name="image"
-            formControlName="image"
-            (change)="onImageChange($event)"
-            class="p-3 text-sm flex flex-col justify-center items-center rounded-md border border-dashed border-slate-200 bg-slate-700 hover:bg-slate-600 hover:border-sky-500 hover:file:bg-sky-300 file:bg-sky-500 file:border-0 file:text-slate-200 file:p-2 file:rounded-lg"
-          />
-        </label>
-
-        <label class="block mt-3">
-          <textarea
-            type="text"
-            name="description"
-            formControlName="description"
-            placeholder="Opis"
-            required
-            class="block w-full mt-1 px-3 py-2 text-sm rounded-md resize-none border border-slate-200 bg-slate-800 focus:outline-none focus:border-sky-500"
-          ></textarea>
-        </label>
-        <div class="mt-3 flex justify-end">
-          <button
-            type="submit"
-            [disabled]="form.invalid"
-            class="hover:bg-sky-300 bg-sky-500 py-1.5 px-6 rounded-md text-center disabled:bg-gray-700 disabled:text-gray-500"
-          >
-            Opublikuj
-          </button>
-        </div>
-      </form>
-    </div>
+    <home-create-post-form />
     <h2 class="text-center mt-4">Posty</h2>
-    <div class="w-full max-w-screen-sm rounded-md mt-2">
+    <div class="w-full max-w-screen-sm mt-2">
       <posts-list />
     </div>
   </div>
