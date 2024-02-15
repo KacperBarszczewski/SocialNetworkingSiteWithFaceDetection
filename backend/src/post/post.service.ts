@@ -37,8 +37,6 @@ export class PostService {
           .post('http://localhost:5000/upload', { image: newPost.image })
           .toPromise();
 
-        console.log('result:', response.data);
-
         if (response.status !== 200) {
           throw new HttpException(
             response.data.error || 'Błąd podczas analizy obrazu',
@@ -46,7 +44,6 @@ export class PostService {
           );
         }
       } catch (error) {
-        console.error('error:', error);
         throw new HttpException(
           error.response.data.error || 'Błąd podczas analizy obrazu',
           error.response.status,
