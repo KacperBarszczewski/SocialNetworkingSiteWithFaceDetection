@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:7.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    ports:
+      - 27017:27017
+    volumes:
+      - ./db/mongodata:/data/db
+
+  nestjs_backend:
+    build: ./backend
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongodb
+
+  python_backend:
+    build: ./backend-python
+    ports:
+      - 5000:5000
+    depends_on:
+      - mongodb
+
+  angular_frontend:
+    build: ./frontend-Angular
+    ports:
+      - 80:80
+    depends_on:
+      - nestjs_backend
+      - python_backend
+
+volumes:
+  mongodata:
+    driver: local
