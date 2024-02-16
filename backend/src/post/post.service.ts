@@ -34,7 +34,9 @@ export class PostService {
     if (image) {
       try {
         const response = await this.httpService
-          .post('http://localhost:5000/upload', { image: newPost.image })
+          .post(process.env.FaceR_URL || 'http://localhost:5000/upload', {
+            image: newPost.image,
+          })
           .toPromise();
 
         if (response.status !== 200) {
