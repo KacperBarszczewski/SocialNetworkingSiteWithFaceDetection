@@ -1,0 +1,5 @@
+Do kąpilacji aplikacji NestJs i Angular:
+npm run build
+
+Do kąpilacji dockera:
+docker compose up --build

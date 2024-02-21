@@ -24,7 +24,7 @@ export class AuthService {
 
     if (existingUser)
       throw new HttpException(
-        'Konto z tym e-mailem już istniej',
+        'Konto z tym e-mailem już istnieje',
         HttpStatus.CONFLICT,
       );
 
