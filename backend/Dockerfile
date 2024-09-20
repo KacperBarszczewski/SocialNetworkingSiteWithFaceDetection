@@ -4,9 +4,11 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --omit=dev
+RUN npm install
 
-COPY ./dist ./dist
+COPY . ./
+
+RUN npm run build
 
 EXPOSE 3000
 
